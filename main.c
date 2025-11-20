@@ -1,13 +1,13 @@
+// Inclusion des bibliotheques necessaires
+// -- Noah
+
 #include "grille.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
-
-
-// a noah de commenter la premiere partie du main
-
-
+// définition de la grille selon les choix de l'utilisateur puis initialisation de celle ci 
+// -- Noah 
 
 int main() {
 
@@ -25,13 +25,11 @@ int main() {
     if (nb_numeros < 1 || nb_numeros > NB_NUMEROS_MAX){ nb_numeros = 5;}
 
     initialiser_grille(&grille, taille, taille);
+
     // met le curseur est le numero de la premiere case a 1 
     Position curseur = {0, 0};
     grille.cellules[0][0].numero = 1;
 
-    
-    
-    
     // declare la variable qui va nous servir a input 
     char input;
 
@@ -53,11 +51,6 @@ int main() {
             break;
         // appelle la fonction qui fait tout 
         deplacer_curseur(&curseur, &grille, input);
-        
-        
-       
-        
-        
         
     }
 
