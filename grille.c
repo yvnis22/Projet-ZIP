@@ -33,11 +33,14 @@ void afficher_grille(Grille *grille, Position curseur) {
             if (curseur.x == j && curseur.y == i) {
                 if (grille->cellules[i][j].numero != 0) {
                     printf("[X] ", grille->cellules[i][j].numero);
+                    printf("[X] ");
                 } 
             }
             // Affiche les nombres a la suite 
             else if (grille->cellules[i][j].numero != 0) {
                 printf("[%d] ", grille->cellules[i][j].numero);
+                printf("[%c] ", 254);  // ■ en CP437
+
             }
             // Affiche les cases vides
             else {
@@ -98,4 +101,5 @@ void deplacer_curseur(Position *curseur, Grille *grille, char touche) {
     }
     // Sinon, le déplacement n'est pas autorisé (ne rien faire)
     // on laisse un else vide pour pouvoir dire que le deplacement es illegal donc juste on refresh l'input
+    
 }

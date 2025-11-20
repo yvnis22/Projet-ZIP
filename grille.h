@@ -14,7 +14,7 @@
 // -- Noah
 typedef struct {
     int numero;
-    bool visite;
+    
 } Case;
 
 typedef struct {
@@ -30,6 +30,12 @@ typedef struct {
 
 // Declaration des fonctions utilisees dans le jeu
 // -- Noah
+
+void afficher_grille(Grille *grille, Position curseur);
+void initialiser_grille(Grille* grille, int lignes, int colonnes);
+void deplacer_curseur(Position *curseur, Grille *grille, char touche);
+
+// headers assez simple, faut juste reussir a naviguer entre les * ou les & ce que je galere encore
 
 void afficher_grille(Grille *grille, Position curseur);
 void initialiser_grille(Grille* grille, int lignes, int colonnes);
