@@ -4,6 +4,9 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+// Initialise une grille avec des dimensions specifiees et les numeros des cases a 0 par defaut
+// -- Noah
+
 void initialiser_grille(Grille *grille, int lignes, int colonnes) {
     if (!grille) return;
     if (lignes < TAILLE_MIN) lignes = TAILLE_MIN;
@@ -29,11 +32,13 @@ void afficher_grille(Grille *grille, Position curseur) {
             // Affiche la position du curseur avec X 
             if (curseur.x == j && curseur.y == i) {
                 if (grille->cellules[i][j].numero != 0) {
+                    printf("[X] ", grille->cellules[i][j].numero);
                     printf("[X] ");
                 } 
             }
             // Affiche les nombres a la suite 
             else if (grille->cellules[i][j].numero != 0) {
+                printf("[%d] ", grille->cellules[i][j].numero);
                 printf("[%c] ", 254);  // ■ en CP437
 
             }
@@ -96,4 +101,5 @@ void deplacer_curseur(Position *curseur, Grille *grille, char touche) {
     }
     // Sinon, le déplacement n'est pas autorisé (ne rien faire)
     // on laisse un else vide pour pouvoir dire que le deplacement es illegal donc juste on refresh l'input
+    
 }
