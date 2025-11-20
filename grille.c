@@ -29,12 +29,13 @@ void afficher_grille(Grille *grille, Position curseur) {
             // Affiche la position du curseur avec X 
             if (curseur.x == j && curseur.y == i) {
                 if (grille->cellules[i][j].numero != 0) {
-                    printf("[X] ", grille->cellules[i][j].numero);
+                    printf("[X] ");
                 } 
             }
             // Affiche les nombres a la suite 
             else if (grille->cellules[i][j].numero != 0) {
-                printf("[%d] ", grille->cellules[i][j].numero);
+                printf("[%c] ", 254);  // ■ en CP437
+
             }
             // Affiche les cases vides
             else {
