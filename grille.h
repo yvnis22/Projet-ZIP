@@ -32,4 +32,5 @@ typedef struct {
 void afficher_grille(Grille *grille, Position curseur);
 void initialiser_grille(Grille* grille, int lignes, int colonnes);
 void deplacer_curseur(Position *curseur, Grille *grille, char touche);
+// headers assez simple, faut juste reussir a naviguer entre les * ou les & ce que je galere encore
 #endif   

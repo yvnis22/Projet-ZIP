@@ -5,8 +5,12 @@
 
 
 
+// a noah de commenter la premiere partie du main
+
+
 
 int main() {
+
     Grille grille;
     int taille;
     int nb_numeros; 
@@ -21,15 +25,14 @@ int main() {
     if (nb_numeros < 1 || nb_numeros > NB_NUMEROS_MAX){ nb_numeros = 5;}
 
     initialiser_grille(&grille, taille, taille);
-
+    // met le curseur est le numero de la premiere case a 1 
     Position curseur = {0, 0};
     grille.cellules[0][0].numero = 1;
-    
-    // Mark starting position as visited
-    
+
     
     
     
+    // declare la variable qui va nous servir a input 
     char input;
 
     while (true) {
@@ -38,15 +41,17 @@ int main() {
         printf("\nUse ZQSD (or WASD) to move. Press 'x' to quit.\n");
         printf("Input: ");
 
-        // Clear input buffer before reading
+        // nettoie tout les characteres speciaux(enter) et la memoire de getchar, copie colle ia mais a rechercher 
+        // une methode plus simple/comprehensible
         int c;
         while ((c = getchar()) != '\n' && c != EOF);
         
         input = getchar();
 
+        // mets fin au programme 
         if (input == 'x' || input == 'X')
             break;
-
+        // appelle la fonction qui fait tout 
         deplacer_curseur(&curseur, &grille, input);
         
         
