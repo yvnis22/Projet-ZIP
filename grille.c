@@ -5,9 +5,6 @@
 #include <stdbool.h>
 
 
-// Initialise une grille avec des dimensions specifiees et les numeros des cases a 0 par defaut
-// -- Noah
-
 
 void initialiser_grille(Grille *grille, int lignes, int colonnes) {
 
@@ -46,7 +43,6 @@ void afficher_grille(Grille *grille, Position curseur) {
             if (curseur.x == j && curseur.y == i) {
                 if (grille->cellules[i][j].numero != 0) {
                     printf("[X] ", curseur.chiffre_actuel);
-
                 } 
             }
             else if ( grille->cellules[i][j].chiffre != 0){
@@ -55,7 +51,6 @@ void afficher_grille(Grille *grille, Position curseur) {
             // Affiche les nombres a la suite 
             else if (grille->cellules[i][j].numero != 0) {
                 printf("[%c] ", 254);
-
             }
             // Affiche les cases vides
             else {
@@ -65,3 +60,4 @@ void afficher_grille(Grille *grille, Position curseur) {
         printf("\n");
     }
 }
+
