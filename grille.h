@@ -38,4 +38,9 @@ void deplacer_curseur(Position *curseur, Grille *grille, char touche);
 Position get_pos1();
 bool a_gagne(Position *curseur, Grille *grille);
 
+
+void gerer_input();
+void gerer_interface();
 #endif   
+
+
