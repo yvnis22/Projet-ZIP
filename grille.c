@@ -5,6 +5,9 @@
 #include <stdbool.h>
 
 
+// Initialise une grille avec des dimensions specifiees et les numeros des cases a 0 par defaut
+// -- Noah
+
 
 void initialiser_grille(Grille *grille, int lignes, int colonnes) {
 
@@ -60,4 +63,3 @@ void afficher_grille(Grille *grille, Position curseur) {
         printf("\n");
     }
 }
-

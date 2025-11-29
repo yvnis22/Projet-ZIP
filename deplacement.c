@@ -16,9 +16,6 @@ Position get_pos1() {
 
 }
 
-
-
-
 void deplacer_curseur(Position *curseur, Grille *grille, char touche) {
     // permet de conserver les coordonnees actuels
     // cela permet de ne pas faire le mouvement de suite pour pouvoir voir si le mouvement est legal 
