@@ -1,3 +1,6 @@
+// Inclusion des bibliotheques necessaires
+// -- Noah
+
 #include "grille.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,11 +10,8 @@
 
 
 
-
-
-// a noah de commenter la premiere partie du main
-
-
+// définition de la grille selon les choix de l'utilisateur puis initialisation de celle ci 
+// -- Noah 
 
 int main() {
 
@@ -30,12 +30,14 @@ int main() {
 
     initialiser_grille(&grille, taille, taille);
 
+
     Position curseur = get_pos1();
     grille.cellules[curseur.y][curseur.x].numero = 1; 
     grille.cellules[curseur.y][curseur.x].chiffre = 1; 
     
 
     
+
 
     while (true) {
         afficher_grille(&grille, curseur);
@@ -50,6 +52,7 @@ int main() {
             break;
 
         deplacer_curseur(&curseur, &grille, input);
+
         if (a_gagne(&curseur, &grille)){
             break;
         }
@@ -57,3 +60,4 @@ int main() {
 
     return 0;
 }
+
