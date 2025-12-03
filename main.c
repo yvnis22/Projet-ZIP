@@ -1,5 +1,5 @@
 // Inclusion des bibliotheques necessaires
-// -- Noah 🍆
+// -- Noah 
 
 #include "grille.h"
 #include <stdio.h>
@@ -13,43 +13,43 @@
 
 int main() {
 
-    //démarrage ncurses 🍆🍆
+    //démarrage ncurses -LONDON-
     initscr();      
-    //On appuie pas sur entrée, les inputs sont directement pris en compte (caca)      🍆🍆
+    //CBREAK = on a pas a appuyer sur entrer pour effectuer un input -LONDON-
     cbreak();             
-    //On affiche pas les touches🍆🍆
+    //On affiche pas les charactères saisis dans le terminal (NOECHO)
     noecho();             
 
-    gerer_interface(); //procédure écrite dans .h. 🍆🍆
-    gerer_input(); //procédure qui attends les inputs utilisateur zobzoubazobzobzobzouba🍆🍆
+    gerer_interface(); //procédure écrite dans .h pour gérer l'interface
+    gerer_input(); //procédure qui attends les inputs utilisateur
       
 
     Grille grille;
-    int taille = 5; // valeur par défaut obviii 5x5 grille mais au final 5x30 training for maximum sex aptitudes
-    int nb_numeros; //g pas capté mais j'ai juste adapté en ncurses ce que ça faisait lolol 🍆🍆
+    int taille = 5; // valeur par défaut 5x5
+    int nb_numeros; //PLACEHOLDER avant la création de l'algorithme de création aléatoire de grille
 
     // menu de sélection de la taille de la grille
     const char *options[] = {
-        "5x5", "6x6", "7x7", "8x8", "9x9", "10x10"      //si besoin on rajoutera d'autres tailles, un peu comme le besoin d'inventer une nouvelle taille de préservatif pour mon PICO-penis
+        "5x5", "6x6", "7x7", "8x8", "9x9", "10x10"      
     };
     int nb_options = 6;
-    int choix = 0; // index du bouton sélectionné (0)
+    int choix = 0; // index du bouton sélectionné (0) (cest une liste dans laquelle on navigue)
 
-    while (1) {
-        clear(); //effacer l ecran puis le recharger, je vais littéralement spammer ça
-        mvprintw(0, 0, "Jeu ZIP - Configuration de la partie\n");   //self explanatory
-        mvprintw(2, 0, "Choisissez la taille de la grille avec les fleches ou ZQSD puis validez avec ENTREE :");//self explanatory 🍆🍆🍆🍆🍆🍆
+    while (1) {     //while (1) est une boucle infinie
+        clear(); //effacer l ecran puis le recharger
+        mvprintw(0, 0, "Jeu ZIP - Configuration de la partie\n");   //self explanatory, affichage à l'écran d'un menu de configuration.
+        mvprintw(2, 0, "Choisissez la taille de la grille avec les fleches ou ZS puis validez avec ENTREE :"); //
 
         for (int i = 0; i < nb_options; i++) {
             if (i == choix) {
-                attron(A_REVERSE); // met en surbrillance l'option sélectionnée pour montrer sur quelle option on est en tant qu utilisateur
-                mvprintw(4 + i, 5, "[ %s ]", options[i]);               //En gros si i==choix, on surbrille, sinon affichage normal
-                attroff(A_REVERSE);
+                attron(A_REVERSE); //activation surbrillance de l'option (pour démarquer des autres)
+                mvprintw(4 + i, 5, "[ %s ]", options[i]);      
+                attroff(A_REVERSE); //désactivation de la surbrillance de l'option
             } else {
-                mvprintw(4 + i, 5, "[ %s ]", options[i]);
+                mvprintw(4 + i, 5, "[ %s ]", options[i]);    //affichage de base
             }
         }
-        refresh(); //cette merde est ultra importante sinon rien ne s'affiche
+        refresh(); //rafraichir l'écran du terminal après les changements
 
         int input = getch();
         if (input == 'z' || input == 'Z') {   //monter dans le menu
@@ -62,11 +62,11 @@ int main() {
         }
     }
 
-    // demande du nombre de numeros (me suis pas fait chier ça va rester un scanf mais en scanw hihihihihihihihihihihihhihi 🍆🍆)
+    // PLACEHOLDER avant l'ajout de la procédure de génération de grille automatique
     printw("entres le nombre de numeros que tu souhaites (1-12) sinon 5 automatiquement : ");
-    refresh();   //mise a jour de l'écran et non pas effaçage. 🍆🍆🍆🍆🍆🍆🍆🍆🍆🍆
+    refresh();   //mise a jour de l'écran
     scanw("%d", &nb_numeros);  //comme un scanf mais immédiat
-    if (nb_numeros < 1 || nb_numeros > NB_NUMEROS_MAX){ nb_numeros = 5;} //condition pour confirmer l'affichage de la grille 🍆🍆🍆🍆
+    if (nb_numeros < 1 || nb_numeros > NB_NUMEROS_MAX){ nb_numeros = 5;} //condition pour confirmer l'affichage de la grille 
 
     initialiser_grille(&grille, taille, taille);
 
@@ -79,23 +79,23 @@ int main() {
 
     while (true) {
         clear(); // efface l’écran avant réaffichage
-        afficher_grille(&grille, curseur); //de noah la lalalalalalalalalala 
+        afficher_grille(&grille, curseur); //de noah
 
-        printw("\n utilise ZQSD (or WASD) pour te deplacer. APPUIE SUR X POUR QUITTER.\n");
+        printw("\n utilise ZQSD (or WASD) pour te deplacer. APPUIE SUR X POUR QUITTER.\n"); 
         refresh(); //mise a jour ecran
 
-        //fonction pour lier une touche à un input FAHHHH
-        input = getch(); // FAHHHH
+        //fonction pour lier une touche à un input 
+        input = getch(); 
 
         // mets fin au programme 
-        if (input == 'x' || input == 'X')  //EN GROS systeme pour quitter la partie, conditionnelle if on appuie sur x ou X ça quitte.
+        if (input == 'x' || input == 'X')  //si on appuie sur 'X', on stoppe tout.
             break;
-        // appelle la fonction qui fait tout les deplacements de Anoul !!!!!!!!!!!!!!!
+        // appelle la fonction qui fait tout les deplacements de Anouk
         deplacer_curseur(&curseur, &grille, input);
         
     }
 
-    endwin(); // fin ncurses 🍆🍆🍆🍆🍆🍆🍆🍆🍆🍆 nettoyage de la circonférence du cylindre
+    endwin(); // fin ncurses 
 
     return 0;
 
