@@ -64,18 +64,18 @@ void afficher_grille(Grille *grille, Position curseur) {
 
 void gerer_interface() {
     clear(); // effacer écran
-    mvprintw(0, 0, "==============================");            //tout les mvprintw c'est self explanatory 👅🍆👅🍆👅👅🍆
-    mvprintw(1, 0, "          -CACA CHIASSE      ");
+    mvprintw(0, 0, "==============================");            //MENU D'ACCUEIL
+    mvprintw(1, 0, "             JEU ZIP          ");
     mvprintw(2, 0, "==============================");
     mvprintw(4, 0, "Utilisez ZQSD ou WASD pour vous déplacer.");
     mvprintw(5, 0, "Appuyez sur 'x' pour quitter.");
-    refresh(); //affiche tout le caca de mvprintw
+    refresh(); //rafraichissement de l'écran pour tout afficher.
 }
 
-//pour gérer inputs (cacachiasse)🍆🍆🍆🍆🍆🍆🍆
+
 void gerer_input() {
-    mvprintw(7, 0, "Appuyez sur une touche");  //self explanatory -_-
-    refresh(); //a chaque fois que j'utilise refresh c'est pour que le printw affiche bien le caca en paramètre.
-    getch(); // attendre une touche de l'utilisateur 👅👅👅👅👅🍆🍆🍆🍆🍆
+    mvprintw(7, 0, "Appuyez sur une touche");  //self explanatory
+    refresh(); //refresh écran
+    getch(); //GETCHAR MAIS IMMEDIAT
 }
 
