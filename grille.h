@@ -13,8 +13,9 @@
 // Definition des structures utilisees dans le jeu
 // -- Noah
 typedef struct {
-    int numero;
-    
+    int numero; // un sorte de booleen, si = 0, c'est une case pas encore visité, et si = n > 0, 
+    // permet d'identifier le chemin effectué par le curseur dans un ordre croissant.
+    int chiffre; //soit un chiffre preset donc toute les valeurs 0 < x < 12 ou bien 0 si ce n'est pas un chiffre preset.
 } Case;
 
 typedef struct {
@@ -26,21 +27,26 @@ typedef struct {
 typedef struct {
     int x;
     int y;
+    int chiffre_actuel; // permet de savoir a quel chiffre on est  
 } Position;
 
-// Declaration des fonctions utilisees dans le jeu
-// -- Noah
+
+typedef struct {
+    int lignes;
+    int colonnes;
+    int nb_presets;
+    const int (*presets)[TAILLE_MAX][TAILLE_MAX];
+} GrillePresetInfo;
+
 
 void afficher_grille(Grille *grille, Position curseur);
 void initialiser_grille(Grille* grille, int lignes, int colonnes);
 void deplacer_curseur(Position *curseur, Grille *grille, char touche);
 
-// headers assez simple, faut juste reussir a naviguer entre les * ou les & ce que je galere encore
 
-void afficher_grille(Grille *grille, Position curseur);
-void initialiser_grille(Grille* grille, int lignes, int colonnes);
-void deplacer_curseur(Position *curseur, Grille *grille, char touche);
+Position get_pos1();
 
-// headers assez simple, faut juste reussir a naviguer entre les * ou les & ce que je galere encore
+bool a_gagne(Position *curseur, Grille *grille);
+
 
 #endif   
