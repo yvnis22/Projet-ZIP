@@ -6,7 +6,6 @@
 
 /**
  * Sauvegarde l'état actuel de la partie dans un fichier.
- * Auteur : Gemini (pour aider Noah)
  */
 void sauvegarder_partie(Grille *grille, Position *curseur, const char *nom_fichier);
 
