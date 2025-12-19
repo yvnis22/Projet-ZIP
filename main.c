@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <conio.h>
+#include <ncurses.h> // ajout pour ncurses
 
 int main() {
     srand(time(NULL));
@@ -12,13 +13,30 @@ int main() {
     int depart_x, depart_y, taille, nb_numeros;
     char choix_menu;
     bool partie_chargee = false;
+    initscr();  //démarage Ncurses
+    cbreak();  //Inputs directements pris en compte
+    noecho();  //Non affichage des charactères rentrés dans le terminal
 
-    // --- MENU INITIAL ---
-    printf("=== JEU ZIP ===\n");
-    printf("1. Nouvelle Partie\n");
-    printf("2. Continuer la partie precedente\n");
-    printf("Choix : ");
+    // --- MENU INITIAL ---             
+
+    mvprintw(0, 0, "  ▀▀                     ▀▀        ");            //MENU D'ACCUEIL
+    mvprintw(1, 0, "  ██ ▄█▀█▄ ██ ██   ▀▀▀██ ██  ████▄ ");
+    mvprintw(2, 0, " ▀██ ██▄█▀ ██ ██     ▄█▀ ██  ██ ██ ");
+    mvprintw(4, 0, "  ██ ▀█▄▄▄ ▀██▀█   ▄██▄▄ ██▄ ████▀ ");
+    mvprintw(5, 0, "  ██                         ██  ");
+    mvprintw(6,0,  "▀▀▀                          ▀▀ ");
+    mvprintw(7,0,  "                        ");
+    mvprintw(8,0,  "                        ");
+    mvprintw(9, 0, "1. Nouvelle Partie\n");
+    mvprintw(10, 0, "2. Continuer la partie precedente\n");
+    mvprintw(11,0,  "Choix : ");
+    refresh(); //rafraichissement de l'écran pour tout afficher.
+}
+
+                                   
+
     choix_menu = _getch();
+
     printf("%c\n", choix_menu);
 
     if (choix_menu == '2') {
@@ -31,6 +49,17 @@ int main() {
             system("pause");
         }
     }
+
+
+
+
+    // menu de sélection de la taille de la grille
+    const char *options[] = {
+        "5x5", "6x6", "7x7", "8x8", "9x9", "10x10"      
+    };
+    int nb_options = 6;
+    int choix = 0; // index du bouton sélectionné (0) (cest une liste dans laquelle on navigue)
+
 
     // --- INITIALISATION (Seulement si nouvelle partie) ---
     if (!partie_chargee) {
