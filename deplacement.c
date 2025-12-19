@@ -16,6 +16,7 @@ Position get_pos1() {
 
 }
 
+
 void deplacer_curseur(Position *curseur, Grille *grille, char touche) {
     // permet de conserver les coordonnees actuels
     // cela permet de ne pas faire le mouvement de suite pour pouvoir voir si le mouvement est legal 
@@ -42,6 +43,11 @@ void deplacer_curseur(Position *curseur, Grille *grille, char touche) {
         default:
             return;
     }
+
+    if (new_x < 0 || new_x >= grille->colonnes || new_y < 0 || new_y >= grille->lignes) {
+    return;
+}
+
     
     // pour avoir le numero de la case et le numero de la case apres le mouvement
     // des fois ca marché quand je mettais ces variables mais des fois non, c pour ca

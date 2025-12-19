@@ -25,7 +25,7 @@ void sauvegarder_partie(Grille *grille, Position *curseur, const char *nom_fichi
     }
 
     fclose(fichier);
-    printf("Partie sauvegardee avec succes dans '%s' !\n", nom_fichier);
+    printf("Partie sauvegardee avec succes !\n");
 }
 
 bool charger_partie(Grille *grille, Position *curseur, const char *nom_fichier) {

@@ -1,89 +1,94 @@
 #include "grille.h"
-#include "sauvegarde.h" // N'oublie pas d'inclure ton nouveau header
+#include "sauvegarde.h" // Ajout de l'include
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <conio.h> // Pour _getch() sous Windows
+#include <conio.h>
 
 int main() {
+    srand(time(NULL));
     Grille grille;
     Position curseur;
+    int depart_x, depart_y, taille, nb_numeros;
     char choix_menu;
     bool partie_chargee = false;
 
-    // --- MENU PRINCIPAL ---
+    // --- MENU INITIAL ---
     printf("=== JEU ZIP ===\n");
-    printf("N - Nouvelle Partie\n");
-    printf("C - Continuer la partie precedente\n");
-    printf("Votre choix : ");
-    
-    do {
-        choix_menu = _getch();
-    } while (choix_menu != 'n' && choix_menu != 'N' && choix_menu != 'c' && choix_menu != 'C');
-    printf("%c\n", choix_menu); // Feedback visuel
+    printf("1. Nouvelle Partie\n");
+    printf("2. Continuer la partie precedente\n");
+    printf("Choix : ");
+    choix_menu = _getch();
+    printf("%c\n", choix_menu);
 
-    // --- LOGIQUE DE CHARGEMENT OU INITIALISATION ---
-    if (choix_menu == 'c' || choix_menu == 'C') {
+    if (choix_menu == '2') {
         if (charger_partie(&grille, &curseur, "sauvegarde.txt")) {
-            printf("Partie chargee !\n");
             partie_chargee = true;
-            system("pause"); // Laisse le temps de lire
+            printf("Chargement reussi !\n");
+            system("pause");
         } else {
-            printf("Aucune sauvegarde trouvee ou erreur de lecture. Demarrage d'une nouvelle partie...\n");
+            printf("Aucune sauvegarde trouvee. Lancement d'une nouvelle partie...\n");
             system("pause");
         }
     }
 
-    // Si on a choisi Nouvelle Partie OU si le chargement a échoué
+    // --- INITIALISATION (Seulement si nouvelle partie) ---
     if (!partie_chargee) {
-        int taille, nb_numeros;
-        
-        printf("\n--- Configuration Nouvelle Partie ---\n");
-        printf("Taille de la grille (5-10) [defaut 5]: ");
-        if (scanf("%d", &taille) != 1) taille = 5; // Securite si l'utilisateur tape des lettres
+        printf("\nConfiguration de la partie\n");
+        printf("Taille (5-10) : ");
+        scanf("%d", &taille);
         if (taille < TAILLE_MIN || taille > TAILLE_MAX) taille = 5;
 
-        // Note: Ton code original demandait nb_numeros mais ne l'utilisait pas encore dans initialiser_grille
-        // Je le laisse pour respecter ta structure.
-        printf("Nombre de numeros (1-12) [defaut 5]: ");
-        if (scanf("%d", &nb_numeros) != 1) nb_numeros = 5;
+        printf("Nombre de numeros (1-12) : ");
+        scanf("%d", &nb_numeros);
         if (nb_numeros < 1 || nb_numeros > NB_NUMEROS_MAX) nb_numeros = 5;
 
-        // Initialisation standard
+        // Allocation et génération (ton code actuel)
+        int **visited = (int**) malloc(taille * sizeof(int *));
+        for (int i = 0; i < taille; i++) {
+            visited[i] = (int*)malloc(taille * sizeof(int));
+            for (int j = 0; j < taille; j++) visited[i][j] = 0;
+        }
+
         initialiser_grille(&grille, taille, taille);
-        
-        // Configuration initiale du curseur (Hardcode comme dans ton fichier original)
-        curseur = get_pos1();
-        grille.cellules[curseur.y][curseur.x].numero = 1; 
-        grille.cellules[curseur.y][curseur.x].chiffre = 1; 
+        curseur = depart_aleatoire(&depart_x, &depart_y, taille);
+        hamiltonien(depart_x, depart_y, 1, taille, visited);
+        placer_numeros_sur_chemin(&grille, visited, taille, nb_numeros);
+
+        // Trouver le '1' pour placer le curseur
+        for (int i = 0; i < taille; i++) {
+            for (int j = 0; j < taille; j++) {
+                if (grille.cellules[i][j].chiffre == 1) {
+                    curseur.x = j; curseur.y = i;
+                    curseur.chiffre_actuel = 1;
+                    grille.cellules[i][j].numero = 1;
+                }
+            }
+        }
+
+        // Nettoyage mémoire de génération
+        for (int i = 0; i < taille; i++) free(visited[i]);
+        free(visited);
     }
 
     // --- BOUCLE DE JEU ---
     while (true) {
         afficher_grille(&grille, curseur);
-
-        printf("\nZ/Q/S/D : Deplacer | B : Sauvegarder & Quitter | X : Quitter sans sauver\n");
-        printf("Input: ");
+        printf("\nZQSD : Bouger | B : Sauvegarder & Quitter | X : Quitter sans sauvegarder\n");
 
         char input = _getch();
-        // printf("%c\n", input); // Optionnel : afficher la touche pressée
 
-        // QUITTER SANS SAUVER
-        if (input == 'x' || input == 'X')
-            break;
+        if (input == 'x' || input == 'X') break;
 
-        // SAUVEGARDER ET QUITTER
+        // GESTION DE LA SAUVEGARDE
         if (input == 'b' || input == 'B') {
             sauvegarder_partie(&grille, &curseur, "sauvegarde.txt");
-            printf("A bientot !\n");
+            _getch(); // Attendre avant de fermer
             break;
         }
 
         deplacer_curseur(&curseur, &grille, input);
-
-        if (a_gagne(&curseur, &grille)){
-            // Optionnel : Supprimer la sauvegarde si on gagne pour forcer une nouvelle partie ?
-            // remove("sauvegarde.txt"); 
+        if (a_gagne(&curseur, &grille)) {
             system("pause");
             break;
         }
