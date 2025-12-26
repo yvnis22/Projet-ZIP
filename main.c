@@ -1,5 +1,5 @@
 #include "grille.h"
-#include "sauvegarde.h" // Ajout de l'include
+#include "sauvegarde.h" 
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -14,11 +14,21 @@ int main() {
     bool partie_chargee = false;
 
     // --- MENU INITIAL ---
-    printf("=== JEU ZIP ===\n");
-    printf("1. Nouvelle Partie\n");
-    printf("2. Continuer la partie precedente\n");
-    printf("Choix : ");
-    choix_menu = _getch();
+    bool input_correct = false;
+
+
+    while (!input_correct) {
+        system("cls"); // Nettoie la console à chaque début de boucle
+        
+        printf("=== JEU ZIP ===\n");
+        printf("1. Nouvelle Partie\n");
+        printf("2. Continuer la partie precedente\n");
+        printf("Choix : ");
+
+        choix_menu = _getch();
+        if (choix_menu == '1' || choix_menu == '2') 
+            input_correct = true;
+    }
     printf("%c\n", choix_menu);
 
     if (choix_menu == '2') {
