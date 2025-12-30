@@ -6,27 +6,48 @@
 
 
 
-void initialiser_grille(Grille *grille, int lignes, int colonnes) {
+void afficher_grille(Grille *grille, Position curseur) {
+    clear();
 
-    if (!grille) return;
-    if (lignes < TAILLE_MIN) lignes = TAILLE_MIN;
-    if (lignes > TAILLE_MAX) lignes = TAILLE_MAX;
-    if (colonnes < TAILLE_MIN) colonnes = TAILLE_MIN;
-    if (colonnes > TAILLE_MAX) colonnes = TAILLE_MAX;
-    
-    
-    grille->lignes = lignes;
-    grille->colonnes = colonnes;
-    // initialise les numero et les chiffres des cases a 0 
-    for (int i = 0; i < lignes; ++i) {
-        for (int j = 0; j < colonnes; ++j) {
-            grille->cellules[i][j].numero = 0;
-            grille->cellules[i][j].chiffre = 0;
-            
+    for (int i = 0; i < grille->lignes; i++) {
+        for (int j = 0; j < grille->colonnes; j++) {
+
+            // Curseur
+            if (curseur.x == j && curseur.y == i) {
+                attron(COLOR_PAIR(2) | A_BOLD);
+                printw("[X] ");
+                attroff(COLOR_PAIR(2) | A_BOLD);
+                continue;
+            }
+
+            // Chiffre (1,2,3...)
+            if (grille->cellules[i][j].chiffre != 0) {
+                attron(COLOR_PAIR(3) | A_BOLD);
+                printw("[%d] ", grille->cellules[i][j].chiffre);
+                attroff(COLOR_PAIR(3) | A_BOLD);
+                continue;
+            }
+
+            // Chemin (#)
+            if (grille->cellules[i][j].numero != 0) {
+                attron(COLOR_PAIR(4));
+                printw("[#] ");
+                attroff(COLOR_PAIR(4));
+                continue;
+            }
+
+            // Case vide
+            attron(COLOR_PAIR(1));
+            printw("[ ] ");
+            attroff(COLOR_PAIR(1));
         }
+        printw("\n");
     }
-    
+
+    refresh();
 }
+
+
 
 void afficher_grille(Grille *grille, Position curseur) {
     system("cls");  // Pour Windows
