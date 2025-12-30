@@ -15,6 +15,17 @@ int main() {
 
     // --- INITIALISATION NCURSES ---
     initscr();
+    start_color();
+    use_default_colors(); // permet d’utiliser les couleurs du terminal
+
+
+    init_pair(1, COLOR_WHITE, -1);   // texte blanc
+    init_pair(2, COLOR_CYAN, -1);    // curseur
+    init_pair(3, COLOR_YELLOW, -1);  // chiffres
+    init_pair(4, COLOR_GREEN, -1);   // couleur du chemin
+    init_pair(5, COLOR_RED, -1);     // cases spéciales
+
+
     cbreak();
     noecho();
 
