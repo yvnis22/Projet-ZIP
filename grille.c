@@ -5,7 +5,18 @@
 #include <stdbool.h>
 
 
-
+/*
+================================================================================
+Fonction   : initialiser_grille
+Auteur     : Anouk et Noah
+Param      : grille (Grille*) - Pointeur vers la grille à initialiser
+             lignes (int) - Nombre de lignes souhaitées
+             colonnes (int) - Nombre de colonnes souhaitées
+Traitement : Définit les dimensions de la grille en respectant les bornes
+             min/max et initialise toutes les cases à zéro.
+Retour     : Aucun (void)
+================================================================================
+*/
 void initialiser_grille(Grille *grille, int lignes, int colonnes) {
 
     if (!grille) return;
@@ -28,6 +39,18 @@ void initialiser_grille(Grille *grille, int lignes, int colonnes) {
     
 }
 
+/*
+================================================================================
+Fonction   : afficher_grille
+Auteur     : Anouk et Noah
+Param      : grille (Grille*) - Pointeur vers la grille à afficher
+             curseur (Position) - Position actuelle du joueur
+Traitement : Nettoie l'écran et parcourt la grille pour afficher soit le
+             curseur [X], soit les chiffres [n], soit les cases remplies,
+             soit les cases vides.
+Retour     : Aucun (void)
+================================================================================
+*/
 void afficher_grille(Grille *grille, Position curseur) {
     system("cls");  // Pour Windows
 

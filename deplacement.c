@@ -10,6 +10,17 @@
 // donc la position initiale du curseur
 // cette fonction qui va normalement ce dupliquer plus tard si c pas foireux. elle sert a hardcode la 
 // position initiale du curseur
+
+/*
+================================================================================
+Fonction   : get_pos1
+Auteur     : Anouk
+Param      : Aucun
+Traitement : Définit une position de départ statique (4, 2) avec un 
+             chiffre actuel initialisé à 1.
+Retour     : Position - La structure de position configurée
+================================================================================
+*/
 Position get_pos1() {
     Position p = {4, 2,1};
     return p ;
@@ -17,11 +28,19 @@ Position get_pos1() {
 }
 
 
-
-
-
-
-
+/*
+================================================================================
+Fonction   : deplacer_curseur
+Auteur     : Anouk 
+Param      : curseur (Position*) - Pointeur vers la position du joueur
+             grille (Grille*) - Pointeur vers la grille de jeu
+             touche (char) - Caractère saisi par l'utilisateur
+Traitement : Calcule la nouvelle position selon la touche (ZQSD/WASD). 
+             Gère le recul (backtracking), le déplacement vers une case vide
+             ou la validation d'un chiffre "preset" dans l'ordre croissant.
+Retour     : Aucun (void)
+================================================================================
+*/
 void deplacer_curseur(Position *curseur, Grille *grille, char touche) {
     // permet de conserver les coordonnees actuels
     // cela permet de ne pas faire le mouvement de suite pour pouvoir voir si le mouvement est legal 
@@ -119,8 +138,6 @@ void deplacer_curseur(Position *curseur, Grille *grille, char touche) {
             curseur->y = new_y;
             //on incremente le numero pour avoir l'effet de backtracking
             grille->cellules[new_y][new_x].numero = numero_actuel + 1;
-        }  
-        
-        
+        }   
     }
 }

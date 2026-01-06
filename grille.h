@@ -27,7 +27,6 @@ typedef struct {
 
 } Position;
 
-
 typedef struct {
     int x, y;
 } Point;
@@ -38,15 +37,55 @@ typedef struct {
     int nb_presets;
     const int (*presets)[TAILLE_MAX][TAILLE_MAX];
 } GrillePresetInfo;
+
+/*
+Affiche la grille dans la console avec le curseur et les chiffres.
+*/
 void afficher_grille(Grille *grille, Position curseur);
-void  initialiser_grille(Grille* grille, int lignes, int colonnes);
+
+/*
+Initialise les structures de la grille avec des valeurs par défaut.
+*/
+void initialiser_grille(Grille* grille, int lignes, int colonnes);
+
+/*
+Gère la logique de déplacement du curseur et les règles de remplissage.
+*/
 void deplacer_curseur(Position *curseur, Grille *grille, char touche);
+
+/*
+Vérifie si une coordonnée est dans les limites et non visitée.
+*/
 bool est_valide(int x, int y, int taille_grille, int **visite);
+
+/*
+Retourne la position initiale codée en dur pour le début du jeu.
+*/
 Position get_pos1();
+
+/*
+Génère une position de départ aléatoire valide sur la grille.
+*/
 Position depart_aleatoire(int *x, int *y, int taille_grille);
+
+/*
+Algorithme de recherche de chemin hamiltonien par récursion.
+*/
 bool hamiltonien(int x, int y, int pas, int taille_grille, int **visite);
+
+/*
+Vérifie si toutes les cases de la grille ont été remplies.
+*/
 bool a_gagne(Position *curseur, Grille *grille);
+
+/*
+Affiche l'état numérique du tableau de visite (debug).
+*/
 void aff(int** visited, int taille) ;
+
+/*
+Répartit les points de passage (numéros) le long du chemin généré.
+*/
 void placer_numeros_sur_chemin(Grille *grille, int **visited, int taille, int nb_numeros);
 
 #endif

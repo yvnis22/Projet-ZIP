@@ -5,7 +5,18 @@
 #include <stdbool.h>
 
 
-
+/*
+================================================================================
+Fonction   : depart_aleatoire
+Auteur     : Anouk
+Param      : x (int*) - Pointeur pour stocker l'abscisse générée
+             y (int*) - Pointeur pour stocker l'ordonnée générée
+             taille_grille (int) - Dimension de la grille carrée
+Traitement : Génère des coordonnées aléatoires et vérifie la parité pour 
+             assurer la faisabilité d'un chemin hamiltonien sur grille impaire.
+Retour     : Position - La position de départ générée.
+================================================================================
+*/
 Position depart_aleatoire(int *x, int *y, int taille_grille)
 {
     while (true) {
@@ -23,7 +34,16 @@ Position depart_aleatoire(int *x, int *y, int taille_grille)
 
 
 
-
+/*
+================================================================================
+Fonction   : afficher
+Auteur     : Anouk
+Param      : visited (int**) - Tableau 2D des passages
+             taille (int) - Dimension de la grille
+Traitement : Affiche la matrice des passages pour le débogage de l'algorithme.
+Retour     : Aucun (void)
+================================================================================
+*/
 void aff(int** visited, int taille)
 {
     for (int i=0; i<taille; i++)
@@ -36,6 +56,18 @@ void aff(int** visited, int taille)
     }
 }
 
+/*
+================================================================================
+Fonction   : est_valide
+Auteur     : Anouk
+Param      : x (int) - Coordonnée X à tester
+             y (int) - Coordonnée Y à tester
+             grille (int) - Taille de la grille
+             visite (int**) - Tableau des cases déjà visitées
+Traitement : Vérifie si la case est dans les limites et n'a pas encore été visitée.
+Retour     : bool - true si la case est accessible, false sinon.
+================================================================================
+*/
 bool est_valide(int x, int y, int grille, int **visite)
 {
     return x >= 0 && x < grille && y >= 0 && y < grille && !(visite[x][y]);
@@ -44,6 +76,20 @@ bool est_valide(int x, int y, int grille, int **visite)
 int directionsx[4] = {0, 1, 0, -1};
 int directionsy[4] = {-1, 0, 1, 0};
 
+/*
+================================================================================
+Fonction   : hamiltonien
+Auteur     : Anouk
+Param      : ligne (int) - Ligne actuelle
+             colonne (int) - Colonne actuelle
+             pas (int) - Nombre de cases déjà visitées
+             taille_grille (int) - Dimension de la grille
+             visite (int**) - Tableau de suivi du chemin
+Traitement : Explore récursivement toutes les directions pour trouver un 
+             chemin passant par chaque case une et une seule fois.
+Retour     : bool - true si un chemin complet est trouvé.
+================================================================================
+*/
 bool hamiltonien(int ligne, int colonne, int pas, int taille_grille, int **visite){
     // on commence par dire que la premiere case ou on est est deja visite
     visite[ligne][colonne] = pas;
@@ -75,7 +121,19 @@ bool hamiltonien(int ligne, int colonne, int pas, int taille_grille, int **visit
     return false;
 }
 
-
+/*
+================================================================================
+Fonction   : placer_numeros_sur_chemin
+Auteur     : Anouk
+Param      : grille (Grille*) - Pointeur vers la structure de jeu
+             visited (int**) - Résultat de l'algorithme hamiltonien
+             taille (int) - Taille de la grille
+             nb_numeros (int) - Nombre de chiffres "indices" à placer
+Traitement : Extrait le chemin ordonné, calcule un espacement régulier avec
+             une part d'aléa, et place les chiffres indices sur la grille.
+Retour     : Aucun (void)
+================================================================================
+*/
 void placer_numeros_sur_chemin(Grille *grille, int **visited, int taille, int nb_numeros) {
     if (nb_numeros <= 0) return;
     
@@ -133,4 +191,3 @@ void placer_numeros_sur_chemin(Grille *grille, int **visited, int taille, int nb
     
     free(chemin);
 }
-

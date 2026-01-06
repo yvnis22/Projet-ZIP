@@ -4,6 +4,7 @@
 
 
 /*
+================================================================================
 Fonction   : sauvegarder_partie
 Auteur     : Emilien et Yanis
 Param      : grille (Grille) - Pointeur vers la structure de la grille
@@ -13,6 +14,7 @@ Traitement : Ouvre un fichier en mode écriture ("w"), écrit les dimensions,
              la position du curseur, puis parcourt la grille pour écrire
              l'état de chaque cellule (numéro et chiffre).
 Retour     : Aucun (void)
+================================================================================
 */
 void sauvegarder_partie(Grille *grille, Position *curseur, const char *nom_fichier) {
     FILE *fichier = fopen(nom_fichier, "w");
@@ -44,6 +46,7 @@ void sauvegarder_partie(Grille *grille, Position *curseur, const char *nom_fichi
 
 
 /*
+================================================================================
 Fonction   : charger_partie
 Auteur     : Emilien et Yanis
 Param      : grille (Grille) - Pointeur pour stocker les données chargées
@@ -52,6 +55,7 @@ Param      : grille (Grille) - Pointeur pour stocker les données chargées
 Traitement : Ouvre le fichier en lecture ("r"), lit les dimensions, le curseur
              et remplit la grille cellule par cellule. Vérifie si le fichier existe.
 Retour     : bool - true si le chargement a réussi, false sinon.
+================================================================================
 */
 bool charger_partie(Grille *grille, Position *curseur, const char *nom_fichier) {
     FILE *fichier = fopen(nom_fichier, "r");
