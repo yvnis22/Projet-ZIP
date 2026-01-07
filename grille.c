@@ -36,19 +36,24 @@ void afficher_grille(Grille *grille, Position curseur) {
             // Affiche la position du curseur avec X 
             if (curseur.x == j && curseur.y == i) {
                 if (grille->cellules[i][j].numero != 0) {
-                    printf("[X] ");
+                    printf("[X ] ");
                 } 
             }
+        
             else if ( grille->cellules[i][j].chiffre != 0){
+                if (grille->cellules[i][j].chiffre < 10 ){
+                    printf("[%d ] ", grille->cellules[i][j].chiffre);
+                }
+                else
                 printf("[%d] ", grille->cellules[i][j].chiffre);
             }
             // Affiche les nombres a la suite 
             else if (grille->cellules[i][j].numero != 0) {
-                printf("[%c] ", 254);
+                printf("[%c ] ", 254);
             }
             // Affiche les cases vides
             else {
-                printf("[ ] ",grille->cellules[i][j].numero );
+                printf("[  ] ",grille->cellules[i][j].numero );
             }
         }
         printf("\n");
