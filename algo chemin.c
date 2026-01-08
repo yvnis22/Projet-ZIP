@@ -22,7 +22,8 @@ Position depart_aleatoire(int *x, int *y, int taille_grille)
     while (true) {
         *x = rand() % taille_grille;
         *y = rand() % taille_grille;
-
+        
+        // Pour les grilles de taille impaire, s'assurer que la somme des coordonnées est paire
         if (taille_grille*taille_grille % 2 == 1 && ((*x + *y) % 2 == 1)) {
             continue;
         }
@@ -34,27 +35,6 @@ Position depart_aleatoire(int *x, int *y, int taille_grille)
 
 
 
-/*
-================================================================================
-Fonction   : afficher
-Auteur     : Anouk
-Param      : visited (int**) - Tableau 2D des passages
-             taille (int) - Dimension de la grille
-Traitement : Affiche la matrice des passages pour le débogage de l'algorithme.
-Retour     : Aucun (void)
-================================================================================
-*/
-void aff(int** visited, int taille)
-{
-    for (int i=0; i<taille; i++)
-    {
-        for (int j=0; j<taille; j++)
-        {
-            printf ("%d ", visited[i][j]) ;
-        }
-        printf ("\n") ;
-    }
-}
 
 /*
 ================================================================================
@@ -73,6 +53,7 @@ bool est_valide(int x, int y, int grille, int **visite)
     return x >= 0 && x < grille && y >= 0 && y < grille && !(visite[x][y]);
 }
 
+// Directions de déplacement : haut, droite, bas, gauche
 int directionsx[4] = {0, 1, 0, -1};
 int directionsy[4] = {-1, 0, 1, 0};
 
@@ -96,6 +77,7 @@ bool hamiltonien(int ligne, int colonne, int pas, int taille_grille, int **visit
 
     // si toutes les cases sont visites alors tout va bien
     if (pas == taille_grille * taille_grille){
+        // Non visible (debug)
         printf("trouve %d\n", pas );
         return true;
     }
@@ -110,13 +92,13 @@ bool hamiltonien(int ligne, int colonne, int pas, int taille_grille, int **visit
 
             // recursion : on teste avec pas plus un qui nous permet d'increm
             if (hamiltonien(new_l, new_c, pas + 1, taille_grille, visite))
-
                 return true;
         }
     }
 
 
-
+    // si on arrive ici c'est qu'aucun mouvement n'a fonctionné on doit donc
+    // annuler la visite de cette case et retourner false pour backtrack
     visite[ligne][colonne] = 0;
     return false;
 }

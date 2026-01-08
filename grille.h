@@ -78,10 +78,6 @@ Vérifie si toutes les cases de la grille ont été remplies.
 */
 bool a_gagne(Position *curseur, Grille *grille);
 
-/*
-Affiche l'état numérique du tableau de visite (debug).
-*/
-void aff(int** visited, int taille) ;
 
 /*
 Répartit les points de passage (numéros) le long du chemin généré.

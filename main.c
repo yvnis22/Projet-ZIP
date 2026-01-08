@@ -16,7 +16,7 @@ RETOUR     : int (0 pour succès)
 ================================================================================
 */
 int main() {
-    // --- INITIALISATION DES VARIABLES ---
+    //  INITIALISATION DES VARIABLES
     Grille grille;
     Position curseur;
     srand(time(NULL));
@@ -27,7 +27,7 @@ int main() {
     bool input_correct = false;
 
 
-    // --- 1. MENU PRINCIPAL ---
+    //  1. MENU PRINCIPAL 
     while (!input_correct) {
         system("cls"); 
         
@@ -44,7 +44,7 @@ int main() {
     printf("%c\n", choix_menu);
 
 
-    // --- 2. GESTION DU CHARGEMENT ---
+    //  2. GESTION DU CHARGEMENT 
     if (choix_menu == '2') {
         if (charger_partie(&grille, &curseur, "sauvegarde.txt")) {
             printf("Partie chargee !\n");
@@ -57,7 +57,7 @@ int main() {
     }
 
 
-    // --- 3. CONFIGURATION NOUVELLE PARTIE ---
+    //  3. CONFIGURATION NOUVELLE PARTIE 
     // Si on a choisi Nouvelle Partie OU si le chargement a échoué
     if (!partie_chargee) {
         system("cls");
@@ -66,7 +66,7 @@ int main() {
         printf("--- Configuration Nouvelle Partie ---\n");
 
         // Saisie de la TAILLE
-        printf("\nTaille de la grille (5-12) [defaut 5]: ");
+        printf("\nTaille de la grille (5-10) [defaut 5]: ");
         if (scanf("%d", &taille) != 1) {
             taille = 5; 
             while (getchar() != '\n'); 
@@ -76,7 +76,7 @@ int main() {
         }
 
         // Saisie du NOMBRE DE NUMEROS
-        printf("\nNombre de numeros (1-10) [defaut 5]: ");
+        printf("\nNombre de numeros (1-12) [defaut 5]: ");
         if (scanf("%d", &nb_numeros) != 1) {
             nb_numeros = 5;
             while (getchar() != '\n'); 
@@ -85,7 +85,7 @@ int main() {
             nb_numeros = 5;
         }
 
-        // --- ALLOCATION ET GENERATION DU CHEMIN ---
+        //  ALLOCATION ET GENERATION DU CHEMIN 
         int **visited = (int**) malloc(taille * sizeof(int *));
         for (int i = 0; i < taille; i++) {
             visited[i] = (int*)malloc(taille * sizeof(int));
@@ -104,7 +104,6 @@ int main() {
 
         initialiser_grille(&grille, taille, taille);
         hamiltonien(depart_x, depart_y, 1, taille, visited);
-        aff(visited, taille);
     
         // Placement des numéros cibles
         placer_numeros_sur_chemin(&grille, visited, taille, nb_numeros);
@@ -123,7 +122,7 @@ int main() {
     }
 
 
-    // --- 4. BOUCLE DE JEU PRINCIPALE ---
+    //  4. BOUCLE DE JEU PRINCIPALE 
     while (true) {
         system("cls"); // Optionnel : pour rafraîchir l'affichage proprement
         afficher_grille(&grille, curseur);
