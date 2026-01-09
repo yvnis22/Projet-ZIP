@@ -28,35 +28,114 @@ void initialiser_grille(Grille *grille, int lignes, int colonnes) {
     
 }
 
-void afficher_grille(Grille *grille, Position curseur) {
-    system("cls");  // Pour Windows
 
+
+
+void afficher_grille(Grille *grille, Position curseur) {
+    
+
+    // Tableau de couleurs avec un dégradé fluide : ROUGE → BLEU
+    const char* couleurs[] = {
+        o5, o4, o3, o2, o1,      // Rouge bordeaux → orange
+        j5, j4, j3, j2, j1,      // Orange → jaune-vert
+        v5, v4, v3, v2, v1,      // Vert clair → vert foncé
+        c5, c4, c3, c2, c1,      // Cyan clair → cyan foncé
+        b5, b4, b3, b2, b1       // Bleu → bleu très foncé
+    };
+    int nb_couleurs = 25;
+    
+    // Calculer le nombre total de cases à parcourir
+    int total_cases = grille->lignes * grille->colonnes;
+    
+    // Créer un tableau pour stocker quel numéro correspond à quel chiffre preset
+    int numero_par_chiffre[NB_NUMEROS_MAX + 1] = {0};
     for (int i = 0; i < grille->lignes; i++) {
         for (int j = 0; j < grille->colonnes; j++) {
-            // Affiche la position du curseur avec X 
+            if (grille->cellules[i][j].chiffre != 0) {
+                // Trouver le numéro qui devrait être à cette position
+                // On doit chercher dans la solution hamiltonienne
+                // Ici, on suppose que le numéro est stocké dans la cellule
+                // On mappe le chiffre preset au numéro de case
+                // On ajoute 1 pour que les numéros commencent à 1
+                // et non à 0
+                // Cela permet de colorer correctement les presets
+                // basé sur leur position dans le chemin
+                // Exemple : si le chiffre preset est 3 et qu'il est à la 10ème case
+                // alors numero_par_chiffre[3] = 10
+                // Cela sera utilisé plus tard pour colorer les presets
+                // selon leur position dans le chemin
+                numero_par_chiffre[grille->cellules[i][j].chiffre] = i * grille->colonnes + j + 1;
+            }
+        }
+    }
+    
+    for (int i = 0; i < grille->lignes; i++) {
+        for (int j = 0; j < grille->colonnes; j++) {
+            int numero_case = grille->cellules[i][j].numero;
+            
+            // Affiche la position du curseur avec X
             if (curseur.x == j && curseur.y == i) {
-                if (grille->cellules[i][j].numero != 0) {
-                    printf("[X ] ");
-                } 
+                int index_couleur = (numero_case - 1) * nb_couleurs / total_cases;
+                if (index_couleur >= nb_couleurs) index_couleur = nb_couleurs - 1;
+                if (index_couleur < 0) index_couleur = 0;
+                
+                printf("%s| ♥  |%s ", couleurs[index_couleur], RESET);
             }
-        
-            else if ( grille->cellules[i][j].chiffre != 0){
-                if (grille->cellules[i][j].chiffre < 10 ){
-                    printf("[%d ] ", grille->cellules[i][j].chiffre);
+            // Affiche les cases visitées avec couleur selon leur numéro
+            else if (numero_case != 0) {                
+                int index_couleur = (numero_case - 1) * nb_couleurs / total_cases;
+                if (index_couleur >= nb_couleurs) index_couleur = nb_couleurs - 1;
+                if (index_couleur < 0) index_couleur = 0;
+                
+                printf("%s|    |%s ", couleurs[index_couleur], RESET);
+            }
+            // Affiche les chiffres presets avec le bon fond
+            // Affiche les chiffres presets
+else if (grille->cellules[i][j].chiffre != 0) {
+    int chiffre = grille->cellules[i][j].chiffre;
+    
+    // Si la case a été visitée (numero != 0), afficher avec couleur
+    if (grille->cellules[i][j].numero != 0) {
+        // Trouver combien il y a de chiffres presets au total
+        int nb_presets = 0;
+        int max_chiffre = 0;
+        for (int pi = 0; pi < grille->lignes; pi++) {
+            for (int pj = 0; pj < grille->colonnes; pj++) {
+                if (grille->cellules[pi][pj].chiffre > 0) {
+                    nb_presets++;
+                    if (grille->cellules[pi][pj].chiffre > max_chiffre) {
+                        max_chiffre = grille->cellules[pi][pj].chiffre;
+                    }
                 }
-                else
-                printf("[%d] ", grille->cellules[i][j].chiffre);
             }
-            // Affiche les nombres a la suite 
-            else if (grille->cellules[i][j].numero != 0) {
-                printf("[%c ] ", 254);
-            }
-            // Affiche les cases vides
+        }
+        
+        // Estimer le numéro de case basé sur le chiffre
+        int numero_estime = (chiffre - 1) * total_cases / max_chiffre + 1;
+        int index_couleur = (numero_estime - 1) * nb_couleurs / total_cases;
+        if (index_couleur >= nb_couleurs) index_couleur = nb_couleurs - 1;
+        if (index_couleur < 0) index_couleur = 0;
+        
+        if (chiffre < 10) {
+            printf("%s| %d  |%s ", couleurs[index_couleur], chiffre, RESET);
+        } else {
+            printf("%s| %d |%s ", couleurs[index_couleur], chiffre, RESET);
+        }
+    }
+        // Sinon, afficher sans couleur (juste en rose)
+        else {
+            if (chiffre < 10) {
+                printf(ro "| %d  |" RESET " ", chiffre);}
             else {
-                printf("[  ] ",grille->cellules[i][j].numero );
+                printf(ro "| %d |" RESET " ", chiffre);
+                 }
+    }
+}
+            // AfficBhe les cases vides
+            else {
+                printf("|    | ");
             }
         }
         printf("\n");
     }
 }
-

@@ -6,15 +6,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-// EN GROS. a chaque fois quon va hardcode une grille on doit connaitre la position du premier chiffre. 
-// donc la position initiale du curseur
-// cette fonction qui va normalement ce dupliquer plus tard si c pas foireux. elle sert a hardcode la 
-// position initiale du curseur
-Position get_pos1() {
-    Position p = {4, 2,1};
-    return p ;
 
-}
 
 
 void deplacer_curseur(Position *curseur, Grille *grille, char touche) {

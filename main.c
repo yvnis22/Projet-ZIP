@@ -4,8 +4,11 @@
 #include <stdlib.h>
 #include <time.h>
 #include <conio.h>
+#include <windows.h>
 
 int main() {
+    SetConsoleOutputCP(CP_UTF8);
+    SetConsoleCP(CP_UTF8);
     srand(time(NULL));
     Grille grille;
     Position curseur;
@@ -80,31 +83,50 @@ int main() {
 
         // Nettoyage mémoire de génération
         for (int i = 0; i < taille; i++) free(visited[i]);
-        free(visited);
+            free(visited);
     }
+    void gotoxy(int x, int y) {;
+        COORD coord = {x, y};
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+    }
+    void cacher_curseur() {
+        CONSOLE_CURSOR_INFO info;
+        info.dwSize = 1;
+        info.bVisible = FALSE;
+        SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
+    }
+
 
     // --- BOUCLE DE JEU ---
-    while (true) {
-        afficher_grille(&grille, curseur);
-        printf("\nZQSD : Bouger | B : Sauvegarder & Quitter | X : Quitter sans sauvegarder\n");
+    cacher_curseur();
+    system("cls");
 
-        char input = _getch();
+while (true) {
+    gotoxy(0, 0);
 
-        if (input == 'x' || input == 'X') break;
+    afficher_grille(&grille, curseur);
 
-        // GESTION DE LA SAUVEGARDE
-        if (input == 'b' || input == 'B') {
-            sauvegarder_partie(&grille, &curseur, "sauvegarde.txt");
-            _getch(); // Attendre avant de fermer
-            break;
-        }
+    printf("ZQSD : Bouger | B : Sauvegarder & Quitter | X : Quitter sans sauvegarder      \n");
 
-        deplacer_curseur(&curseur, &grille, input);
-        if (a_gagne(&curseur, &grille)) {
-            system("pause");
-            break;
-        }
+    char input = _getch();
+
+    if (input == 'x' || input == 'X')
+        break;
+
+    if (input == 'b' || input == 'B') {
+        sauvegarder_partie(&grille, &curseur, "sauvegarde.txt");
+        _getch();
+        break;
     }
+
+    deplacer_curseur(&curseur, &grille, input);
+
+    if (a_gagne(&curseur, &grille)) {
+        _getch();
+        break;
+    }
+}
+
 
     return 0;
 }

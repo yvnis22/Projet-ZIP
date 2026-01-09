@@ -7,6 +7,46 @@
 #define TAILLE_MAX 10
 #define NB_NUMEROS_MAX 12
 
+#define RESET   "\033[0m"
+// BLEU - Début du dégradé
+#define b1  "\e[48;5;17m"  // Bleu très foncé
+#define b2  "\e[48;5;18m"  // Bleu foncé
+#define b3  "\e[48;5;19m"  // Bleu marine
+#define b4  "\e[48;5;20m"  // Bleu
+#define b5  "\e[48;5;21m"  // Bleu roi
+
+// CYAN/TURQUOISE - Transition
+#define c1  "\e[48;5;27m"  // Bleu vif
+#define c2  "\e[48;5;33m"  // Cyan foncé
+#define c3  "\e[48;5;39m"  // Cyan
+#define c4  "\e[48;5;45m"  // Cyan clair
+#define c5  "\e[48;5;51m"  // Cyan très clair
+
+// VERT - Milieu
+#define v1  "\e[48;5;40m"  // Vert foncé
+#define v2  "\e[48;5;46m"  // Vert lime
+#define v3  "\e[48;5;82m"  // Vert vif
+#define v4  "\e[48;5;118m" // Vert clair
+#define v5  "\e[48;5;154m" // Vert lime clair
+
+// JAUNE - Transition
+#define j1  "\e[48;5;190m" // Jaune-vert
+#define j2  "\e[48;5;226m" // Jaune vif
+#define j3  "\e[48;5;220m" // Jaune or
+#define j4  "\e[48;5;214m" // Jaune-orange
+#define j5  "\e[48;5;208m" // Orange clair
+
+// ORANGE
+#define o1  "\e[48;5;202m" // Orange
+#define o2  "\e[48;5;196m" // Orange-rouge
+#define o3  "\e[48;5;160m" // Rouge-orange
+#define o4  "\e[48;5;124m" // Rouge foncé
+#define o5  "\e[48;5;88m"  // Rouge bordeaux
+
+#define ro "\e[38;5;205m" // ROSE_VIF (texte pour les chiffres)
+
+
+
 typedef struct {
     int numero; // un sorte de booleen, si il est a 0 c une case pas visité et si il est a un numero
     // decroissant par rapport auc curseur il est visité
