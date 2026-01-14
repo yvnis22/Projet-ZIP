@@ -2,10 +2,15 @@
 #define GRILLE_H
 
 #include <stdbool.h>
+#include <time.h>
 
 #define TAILLE_MIN 5
 #define TAILLE_MAX 10
 #define NB_NUMEROS_MAX 12
+#define TIME_LIMIT_SECONDS 1
+
+
+// Codes de couleur ANSI pour le dégradé
 
 #define RESET   "\033[0m"
 // BLEU - Début du dégradé
@@ -82,11 +87,10 @@ void afficher_grille(Grille *grille, Position curseur);
 void  initialiser_grille(Grille* grille, int lignes, int colonnes);
 void deplacer_curseur(Position *curseur, Grille *grille, char touche);
 bool est_valide(int x, int y, int taille_grille, int **visite);
-Position get_pos1();
 Position depart_aleatoire(int *x, int *y, int taille_grille);
-bool hamiltonien(int x, int y, int pas, int taille_grille, int **visite);
+int hamiltonien(int x, int y, int pas, int taille_grille, int **visite);
 bool a_gagne(Position *curseur, Grille *grille);
-void aff(int** visited, int taille) ;
 void placer_numeros_sur_chemin(Grille *grille, int **visited, int taille, int nb_numeros);
+int hamiltonien_boucle(int hamiltonien_resultat, time_t TIME, double TIME_LIMIT);
 
 #endif

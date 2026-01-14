@@ -1,3 +1,6 @@
+
+
+
 #include "grille.h"
 #include "sauvegarde.h" 
 #include <stdio.h>
@@ -5,6 +8,9 @@
 #include <time.h>
 #include <conio.h>
 #include <windows.h>
+#include "refresh.h"
+
+int hamiltonien_boucle(int path, time_t start_time, double time_limit);
 
 int main() {
     SetConsoleOutputCP(CP_UTF8);
@@ -58,7 +64,7 @@ int main() {
         scanf("%d", &nb_numeros);
         if (nb_numeros < 1 || nb_numeros > NB_NUMEROS_MAX) nb_numeros = 5;
 
-        // Allocation et génération (ton code actuel)
+        // Allocation et génération du chemin hamiltonien
         int **visited = (int**) malloc(taille * sizeof(int *));
         for (int i = 0; i < taille; i++) {
             visited[i] = (int*)malloc(taille * sizeof(int));
@@ -66,8 +72,34 @@ int main() {
         }
 
         initialiser_grille(&grille, taille, taille);
+        
         curseur = depart_aleatoire(&depart_x, &depart_y, taille);
-        hamiltonien(depart_x, depart_y, 1, taille, visited);
+        // Génération du chemin hamiltonien avec limite de temps
+        time_t start_time = time(NULL);
+        int trouve = 0;
+        // Boucle jusqu'à trouver un chemin ou dépasser la limite de temps (1 seconde)
+        while (difftime(time(NULL), start_time) < 1.0) {
+
+        // remise à zéro de la matrice visite
+        for (int i = 0; i < taille; i++)
+            for (int j = 0; j < taille; j++)
+                visited[i][j] = 0;
+
+        // nouveau point de départ aléatoire
+        curseur = depart_aleatoire(&depart_x, &depart_y, taille);
+
+        if (hamiltonien(depart_x, depart_y, 1, taille, visited)) {
+            trouve = 1;
+            break;
+        }
+    }
+
+if (!trouve) {
+    printf("Echec de la generation du chemin hamiltonien (timeout)\n");
+    return 1;
+}
+
+
         placer_numeros_sur_chemin(&grille, visited, taille, nb_numeros);
 
         // Trouver le '1' pour placer le curseur
@@ -85,21 +117,12 @@ int main() {
         for (int i = 0; i < taille; i++) free(visited[i]);
             free(visited);
     }
-    void gotoxy(int x, int y) {;
-        COORD coord = {x, y};
-        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
-    }
-    void cacher_curseur() {
-        CONSOLE_CURSOR_INFO info;
-        info.dwSize = 1;
-        info.bVisible = FALSE;
-        SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
-    }
+    
 
 
     // --- BOUCLE DE JEU ---
-    cacher_curseur();
-    system("cls");
+cacher_curseur();
+system("cls");
 
 while (true) {
     gotoxy(0, 0);

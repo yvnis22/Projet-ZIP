@@ -1,8 +1,8 @@
-#include "grille.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <stdio.h>
 #include <stdbool.h>
+#include "grille.h"
 
 
 
@@ -11,7 +11,9 @@ Position depart_aleatoire(int *x, int *y, int taille_grille)
     while (true) {
         *x = rand() % taille_grille;
         *y = rand() % taille_grille;
-
+        // S'assurer que la somme des coordonnées est paire si la taille de la grille est impaire
+        // Cela garantit qu'un chemin hamiltonien est possible
+        // On recommence la selection si ce n'est pas le cas
         if (taille_grille*taille_grille % 2 == 1 && ((*x + *y) % 2 == 1)) {
             continue;
         }
@@ -24,38 +26,31 @@ Position depart_aleatoire(int *x, int *y, int taille_grille)
 
 
 
-void aff(int** visited, int taille)
-{
-    for (int i=0; i<taille; i++)
-    {
-        for (int j=0; j<taille; j++)
-        {
-            printf ("%d ", visited[i][j]) ;
-        }
-        printf ("\n") ;
-    }
-}
+
 
 bool est_valide(int x, int y, int grille, int **visite)
 {
     return x >= 0 && x < grille && y >= 0 && y < grille && !(visite[x][y]);
 }
-
+// Directions pour se deplacer dans la grille
+//`
 int directionsx[4] = {0, 1, 0, -1};
 int directionsy[4] = {-1, 0, 1, 0};
-
-bool hamiltonien(int ligne, int colonne, int pas, int taille_grille, int **visite){
+int hamiltonien(int ligne, int colonne, int pas, int taille_grille, int **visite){
+    
+   
     // on commence par dire que la premiere case ou on est est deja visite
     visite[ligne][colonne] = pas;
 
     // si toutes les cases sont visites alors tout va bien
     if (pas == taille_grille * taille_grille){
         printf("trouve %d\n", pas );
-        return true;
+        return 1;
     }
     // on teste toutes les directions
     for (int i = 0; i < 4; i++){
-
+        
+    
         // cela nosu permet de changer de case sur la grille
         int new_l = ligne    + directionsx[i];
         int new_c = colonne + directionsy[i];
@@ -63,16 +58,16 @@ bool hamiltonien(int ligne, int colonne, int pas, int taille_grille, int **visit
         if (est_valide(new_l, new_c, taille_grille, visite)){
 
             // recursion : on teste avec pas plus un qui nous permet d'increm
-            if (hamiltonien(new_l, new_c, pas + 1, taille_grille, visite))
-
-                return true;
+            if (hamiltonien(new_l, new_c, pas + 1, taille_grille, visite)) {
+                return 1;
+            }
         }
     }
 
 
 
     visite[ligne][colonne] = 0;
-    return false;
+    return 0;
 }
 
 
