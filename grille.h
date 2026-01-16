@@ -83,14 +83,50 @@ typedef struct {
     int nb_presets;
     const int (*presets)[TAILLE_MAX][TAILLE_MAX];
 } GrillePresetInfo;
+
+/*
+Affiche la grille de jeu dans la console avec la position actuelle du curseur et les couleurs.
+ */
 void afficher_grille(Grille *grille, Position curseur);
+
+/*
+Initialise une grille avec les dimensions spécifiées et met toutes les cases à zéro.
+ */
 void  initialiser_grille(Grille* grille, int lignes, int colonnes);
+
+/*
+Gère le déplacement du curseur en fonction de la touche saisie et applique les règles du jeu.
+ */
 void deplacer_curseur(Position *curseur, Grille *grille, char touche);
+
+/*
+Vérifie si les coordonnées sont dans la grille et si la case n'a pas encore été visitée.
+ */
 bool est_valide(int x, int y, int taille_grille, int **visite);
+
+/*
+Génère une position de départ aléatoire respectant les contraintes de parité pour le chemin hamiltonien.
+ */
 Position depart_aleatoire(int *x, int *y, int taille_grille);
-int hamiltonien(int x, int y, int pas, int taille_grille, int **visite);
+
+/*
+Algorithme récursif qui tente de trouver un chemin hamiltonien dans la grille avec une limite de temps.
+ */
+int hamiltonien(int x, int y, int pas, int taille_grille, int **visite, clock_t debut_temps, double limite_temps);
+
+/*
+Vérifie si le joueur a gagné en parcourant toutes les cases de la grille.
+ */
 bool a_gagne(Position *curseur, Grille *grille);
+
+/*
+Place les numéros (objectifs) sur la grille en suivant le chemin hamiltonien généré.
+ */
 void placer_numeros_sur_chemin(Grille *grille, int **visited, int taille, int nb_numeros);
+
+/*
+Gère la boucle de tentatives pour trouver un chemin hamiltonien valide dans le temps imparti.
+ */
 int hamiltonien_boucle(int hamiltonien_resultat, time_t TIME, double TIME_LIMIT);
 
 #endif
