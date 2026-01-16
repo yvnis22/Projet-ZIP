@@ -72,7 +72,6 @@ typedef struct {
 
 } Position;
 
-
 typedef struct {
     int x, y;
 } Point;
