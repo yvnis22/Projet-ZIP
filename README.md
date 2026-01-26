@@ -1,85 +1,118 @@
 # 🧩 Projet ZIP - Jeu de Parcours Logique
 
-Bienvenue dans le **Projet ZIP**, une application développée en langage C dans le cadre d'une SAE en Département Informatique (S1A). Le but est de résoudre un casse-tête de parcours en remplissant l'intégralité d'une grille.
+Bienvenue dans le **Projet ZIP**, une application développée en langage C dans le cadre d'une SAE en Département Informatique (S1A). Le but est de résoudre un casse-tête de parcours algorithmique en remplissant l'intégralité d'une grille générée dynamiquement.
 
 ---
 
 ## 📜 Règles du Jeu
 
-Le jeu ZIP repose sur des contraintes algorithmiques et logiques strictes :
+Le jeu ZIP repose sur des contraintes logiques strictes :
+
 * **Complétion de la grille** : Le joueur doit passer une et une seule fois par chacune des cases de la grille.
-* **Ordre numérique** : Le parcours doit respecter l'ordre des numéros (1, 2, 3...) placés aléatoirement sur la grille.
-* **Déplacements autorisés** : Le curseur peut se déplacer en bas, en haut, à gauche et à droite.
+* **Ordre numérique** : Le parcours doit respecter l'ordre des numéros pré-placés (les "presets" : 1, 2, 3...) sur la grille.
+* **Déplacements autorisés** : Le curseur peut se déplacer uniquement de manière orthogonale (Haut, Bas, Gauche, Droite).
 * **Interdiction des diagonales** : Les déplacements en diagonale ne sont pas autorisés.
-* **Backtracking (Retour arrière)** : Il est possible de rebrousser chemin, mais le joueur doit alors repasser dans l'ordre inverse exact du chemin parcouru.
+* **Backtracking (Retour arrière)** : Il est possible de rebrousser chemin pour corriger une erreur, mais le joueur doit repasser dans l'ordre inverse exact du chemin parcouru (effaçant ainsi son passage).
 
 ---
 
 ## 🎮 Comment Jouer ?
 
 ### Commandes au clavier
-L'interface utilisateur s'exécute exclusivement en mode console sous Windows.
+
+L'interface utilisateur s'exécute en mode console sous Windows. La navigation se fait désormais via les **flèches directionnelles**.
 
 | Touche | Action |
-| :--- | :--- |
-| **Z / W** | Déplacer le curseur vers le **Haut** |
-| **S** | Déplacer le curseur vers le **Bas** |
-| **Q / A** | Déplacer le curseur vers la **Gauche** |
-| **D** | Déplacer le curseur vers la **Droite** |
-| **B** | **Sauvegarder** la partie en cours et quitter immédiatement |
-| **X** | Quitter le programme sans sauvegarder |
+| --- | --- |
+| **⬆️ Flèche HAUT** | Déplacer le curseur vers le **Haut** |
+| **⬇️ Flèche BAS** | Déplacer le curseur vers le **Bas** |
+| **⬅️ Flèche GAUCHE** | Déplacer le curseur vers la **Gauche** |
+| **➡️ Flèche DROITE** | Déplacer le curseur vers la **Droite** |
+| **B** | **Sauvegarder** la partie et retourner au menu |
+| **X** | Retourner au menu principal **sans sauvegarder** |
 
 ### Menu Principal
-Au lancement du jeu, un menu vous permet de choisir entre deux modes :
-1. **Nouvelle Partie** : Permet de configurer la taille de la grille (minimum 5x5, maximum 10x10) et le nombre de chiffres à placer (jusqu'à 12).
-2. **Continuer** : Charge automatiquement l'état de la partie précédente depuis le fichier `sauvegarde.txt`.
+
+Au lancement, un menu graphique ASCII vous propose trois options :
+
+1. **Nouvelle Partie** : Permet de configurer la taille de la grille (de 5x5 à 10x10) et le nombre de chiffres objectifs (jusqu'à 12).
+2. **Continuer Partie** : Charge automatiquement l'état de la dernière partie depuis le fichier `sauvegarde.txt`.
+3. **Quitter le Jeu** : Ferme l'application.
 
 ---
 
 ## 🛠️ Installation et Compilation
 
 ### Prérequis
-* Système d'exploitation : **Windows** (obligatoire pour l'exécution finale).
-* Compilateur : **GCC** ou tout environnement supportant le langage C.
+
+* **Système d'exploitation** : Windows (nécessaire pour `windows.h`, `conio.h` et la gestion du curseur).
+* **Encodage** : Console configurée en UTF-8 pour l'affichage des caractères spéciaux (cœurs, blocs).
+* **Compilateur** : GCC (MinGW) recommandé.
+
+### Compilation
+
+Pour compiler le projet complet, ouvrez votre terminal dans le dossier du projet et exécutez :
+
+```bash
+gcc *.c -o ZIP_Game.exe
+
+```
 
 ---
 
 ## 🏗️ Architecture du Projet
 
-Le programme suit un **découpage fonctionnel** strict pour séparer les responsabilités :
+Le programme suit un **découpage modulaire** pour séparer la logique, l'affichage et la gestion des données :
 
 * **`main.c`** :
-    * Gère le menu principal (Nouvelle partie / Charger) avec nettoyage de la console.
-    * Initialise le générateur aléatoire (`srand`) et les structures de base.
-    * Orchestre la boucle de jeu et la détection des touches de sauvegarde ou de sortie.
-* **`grille.h` & `grille.c`** :
-    * Définit les structures `Case`, `Grille` et `Position`.
-    * `initialiser_grille` : Prépare la mémoire et met les cases à zéro.
-    * `afficher_grille` : Gère le rendu visuel du jeu en console avec `system("cls")`.
+* Point d'entrée du programme.
+* Contient la **boucle principale** de l'application (Menu ↔ Jeu).
+* Gère l'initialisation et les transitions entre les écrans.
+
+
+* **`grille.c` & `grille.h**` :
+* Gère la structure de données `Grille`.
+* `initialiser_grille` : Allocation mémoire et configuration.
+* `afficher_grille` : Rendu visuel avancé avec **dégradé de couleurs ANSI** (Rouge → Bleu) pour visualiser la progression du chemin.
+
+
 * **`deplacement.c`** :
-    * `deplacer_curseur` : Calcule les nouvelles coordonnées et vérifie la légalité du mouvement.
-    * Implémente la logique de backtracking pour effacer les cases en reculant.
+* Moteur physique du jeu.
+* `deplacer_curseur` : Gère les collisions, valide l'ordre des presets et implémente la logique de **backtracking**.
+* Interprète les codes ASCII des flèches directionnelles.
+
+
 * **`algo chemin.c`** :
-    * `hamiltonien` : Algorithme récursif permettant de générer un chemin passant par toutes les cases.
-    * `placer_numeros_sur_chemin` : Répartit les numéros obligatoires le long du chemin généré.
-* **`sauvegarde.h` & `sauvegarde.c`** :
-    * `sauvegarder_partie` : Enregistre l'état de la grille, du curseur et de la progression dans `sauvegarde.txt`.
-    * `charger_partie` : Restaure une partie précédente au lancement du jeu.
+* Générateur de niveau procédural.
+* `hamiltonien` : Algorithme de recherche récursif (backtracking) pour garantir qu'une solution existe.
+* Intègre un **timeout** (sécurité temporelle) pour éviter les blocages lors de la génération de grandes grilles (10x10).
+* `placer_numeros_sur_chemin` : Distribue intelligemment les objectifs sur le chemin validé.
+
+
+* **`sauvegarde.c`** :
+* Gestion de la persistance des données.
+* Sérialise la grille, la position du joueur et l'historique dans `sauvegarde.txt`.
+
+
+* **`fonctions_refresh.c`** :
+* Outils d'optimisation d'affichage.
+* `gotoxy` : Permet de rafraîchir l'écran sans clignotement en déplaçant le curseur console.
+* `cacher_curseur` : Masque le curseur clignotant de Windows pour une meilleure esthétique.
+
+
 * **`gagne.c`** :
-    * `a_gagne` : Parcourt la grille pour vérifier qu'aucune case vide (numero == 0) ne subsiste.
+* `a_gagne` : Vérifie la condition de victoire (remplissage total de la grille).
+
+
 
 ---
 
-### Compilation
-Pour compiler le projet complet (incluant tous les modules), utilisez la commande suivante dans votre terminal :
-```bash
-gcc *.c -o ZIP_Game.exe
-```
---- 
-
 ### 👥 Auteurs
-- Emilien BRANDO
-- Yanis BENMIRA
-- Anouk OBER
-- London OSSETI-FORT
-- Noah DELATTRE
+
+Projet réalisé par l'équipe :
+
+* **Emilien BRANDO**
+* **Yanis BENMIRA**
+* **Anouk OBER**
+* **London OSSETI-FORT**
+* **Noah DELATTRE**
