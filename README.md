@@ -65,43 +65,43 @@ gcc *.c -o ZIP_Game.exe
 Le programme suit un **découpage modulaire** pour séparer la logique, l'affichage et la gestion des données :
 
 * **`main.c`** :
-* Point d'entrée du programme.
-* Contient la **boucle principale** de l'application (Menu ↔ Jeu).
-* Gère l'initialisation et les transitions entre les écrans.
+  * Point d'entrée du programme.
+  * Contient la **boucle principale** de l'application (Menu ↔ Jeu).
+  * Gère l'initialisation et les transitions entre les écrans.
 
 
-* **`grille.c` & `grille.h**` :
-* Gère la structure de données `Grille`.
-* `initialiser_grille` : Allocation mémoire et configuration.
-* `afficher_grille` : Rendu visuel avancé avec **dégradé de couleurs ANSI** (Rouge → Bleu) pour visualiser la progression du chemin.
+* **`grille.c` & `grille.h`** :
+  * Gère la structure de données `Grille`.
+  * `initialiser_grille` : Allocation mémoire et configuration.
+  * `afficher_grille` : Rendu visuel avancé avec **dégradé de couleurs ANSI** (Rouge → Bleu) pour visualiser la progression du chemin.
 
 
 * **`deplacement.c`** :
-* Moteur physique du jeu.
-* `deplacer_curseur` : Gère les collisions, valide l'ordre des presets et implémente la logique de **backtracking**.
-* Interprète les codes ASCII des flèches directionnelles.
+  * Moteur physique du jeu.
+  * `deplacer_curseur` : Gère les collisions, valide l'ordre des presets et implémente la logique de **backtracking**.
+  * Interprète les codes ASCII des flèches directionnelles.
 
 
 * **`algo chemin.c`** :
-* Générateur de niveau procédural.
-* `hamiltonien` : Algorithme de recherche récursif (backtracking) pour garantir qu'une solution existe.
-* Intègre un **timeout** (sécurité temporelle) pour éviter les blocages lors de la génération de grandes grilles (10x10).
-* `placer_numeros_sur_chemin` : Distribue intelligemment les objectifs sur le chemin validé.
+  * Générateur de niveau procédural.
+  * `hamiltonien` : Algorithme de recherche récursif (backtracking) pour garantir qu'une solution existe.
+  * Intègre un **timeout** (sécurité temporelle) pour éviter les blocages lors de la génération de grandes grilles (10x10).
+  * `placer_numeros_sur_chemin` : Distribue intelligemment les objectifs sur le chemin validé.
 
 
 * **`sauvegarde.c`** :
-* Gestion de la persistance des données.
-* Sérialise la grille, la position du joueur et l'historique dans `sauvegarde.txt`.
+  * Gestion de la persistance des données.
+  * Sérialise la grille, la position du joueur et l'historique dans `sauvegarde.txt`.
 
 
 * **`fonctions_refresh.c`** :
-* Outils d'optimisation d'affichage.
-* `gotoxy` : Permet de rafraîchir l'écran sans clignotement en déplaçant le curseur console.
-* `cacher_curseur` : Masque le curseur clignotant de Windows pour une meilleure esthétique.
+  * Outils d'optimisation d'affichage.
+  * `gotoxy` : Permet de rafraîchir l'écran sans clignotement en déplaçant le curseur console.
+  * `cacher_curseur` : Masque le curseur clignotant de Windows pour une meilleure esthétique.
 
 
 * **`gagne.c`** :
-* `a_gagne` : Vérifie la condition de victoire (remplissage total de la grille).
+  * `a_gagne` : Vérifie la condition de victoire (remplissage total de la grille).
 
 
 
