@@ -7,7 +7,7 @@
 /*
 ================================================================================
 Fonction   : initialiser_grille
-Auteur     : Équipe
+Auteur     : Anouk
 Param      : grille (Grille*) - Pointeur vers la structure à initialiser
              lignes (int) - Nombre de lignes souhaité
              colonnes (int) - Nombre de colonnes souhaité
@@ -40,7 +40,7 @@ void initialiser_grille(Grille *grille, int lignes, int colonnes) {
 /*
 ================================================================================
 Fonction   : afficher_grille
-Auteur     : Équipe
+Auteur     : Anouk
 Param      : grille (Grille*) - Pointeur vers la grille
              curseur (Position) - Position actuelle du joueur pour affichage
 Traitement : Affiche la grille caractère par caractère en appliquant un 

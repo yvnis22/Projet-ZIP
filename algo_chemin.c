@@ -106,7 +106,7 @@ int hamiltonien(int ligne, int colonne, int pas, int taille_grille, int **visite
 /*
 ================================================================================
 Fonction   : placer_numeros_sur_chemin
-Auteur     : Anouk / Équipe
+Auteur     : Anouk 
 Param      : grille (Grille*) - Grille à modifier
              visited (int**) - Le chemin hamiltonien généré
              taille (int) - Taille de la grille

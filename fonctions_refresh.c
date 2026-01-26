@@ -9,7 +9,7 @@
 /*
 ================================================================================
 Fonction   : gotoxy
-Auteur     : Noah
+Auteur     : Anouk
 Param      : x (int) - Coordonnée colonne
              y (int) - Coordonnée ligne
 Traitement : Déplace le curseur de la console à une position précise pour 
@@ -25,7 +25,7 @@ void gotoxy(int x, int y) {
 /*
 ================================================================================
 Fonction   : cacher_curseur
-Auteur     : Noah
+Auteur     : Anouk
 Param      : Aucun
 Traitement : Utilise l'API Windows pour rendre le curseur de saisie invisible 
              pendant l'affichage de la grille.

@@ -7,10 +7,10 @@
 /*
 ================================================================================
 Fonction   : deplacer_curseur
-Auteur     : Équipe
+Auteur     : Anouk et Emilien
 Param      : curseur (Position*) - Pointeur vers la position actuelle
              grille (Grille*) - Pointeur vers la grille de jeu
-             touche (char) - Caractère saisi par l'utilisateur (z,q,s,d)
+             touche (char) - Caractère saisi par l'utilisateur (up, down, left, right)
 Traitement : Gère le déplacement du curseur en vérifiant les collisions,
              le backtracking (retour arrière) et la progression sur les
              chiffres prédéfinis.
@@ -22,26 +22,22 @@ void deplacer_curseur(Position *curseur, Grille *grille, char touche) {
     int new_x = curseur->x;
     int new_y = curseur->y;
 
-    // Gestion des inputs (Haut, Bas, Gauche, Droite)
+    // Gestion des inputs (Haut, Bas, Gauche, Droite) avec les flèches directionnelles
     switch (touche) {
-        case 'w': case 'W': case 'z': case 'Z': // Haut
+        case 72: // Flèche HAUT (Code ASCII 72)
             if (curseur->y > 0) new_y--;
             break;
 
-        case 's': case 'S': // Bas
+        case 80: // Flèche BAS (Code ASCII 80)
             if (curseur->y < grille->lignes - 1) new_y++;
             break;
-
-        case 'a': case 'A': case 'q': case 'Q': // Gauche
+        case 75: // Flèche GAUCHE (Code ASCII 75)
             if (curseur->x > 0) new_x--;
             break;
 
-        case 'd': case 'D': // Droite
+        case 77: // Flèche DROITE (Code ASCII 77)
             if (curseur->x < grille->colonnes - 1) new_x++;
             break;
-
-        default:
-            return;
     }
 
     // Vérification de sécurité des limites de la grille

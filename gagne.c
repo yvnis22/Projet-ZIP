@@ -7,7 +7,7 @@
 /*
 ================================================================================
 Fonction   : a_gagne
-Auteur     : Équipe
+Auteur     : Anouk
 Param      : curseur (Position*) - Position actuelle (non utilisé ici mais standard)
              grille (Grille*) - Pointeur vers la grille
 Traitement : Parcourt toute la grille pour vérifier si toutes les cases ont 
